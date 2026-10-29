@@ -49,8 +49,13 @@
                 </div>
             </div>
 
-            <button onclick="abrirModalPublicar()" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-xl group bg-gradient-to-br from-brand-500 to-emerald-600 group-hover:from-brand-500 group-hover:to-emerald-600 text-slate-950 font-bold hover:shadow-lg hover:shadow-brand-500/25 transition-all duration-300">
-                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 rounded-[10px] bg-slate-900 text-white group-hover:bg-opacity-0 group-hover:text-slate-950 flex items-center gap-2">
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#catalogo" class="hover:text-brand-400 transition-colors">Catálogo</a>
+                <a href="#impacto" class="hover:text-brand-400 transition-colors">Impacto Ecológico</a>
+            </nav>
+
+            <button onclick="abrirModalPublicar()" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-xl group bg-gradient-to-br from-brand-500 to-emerald-600 text-slate-950 font-bold hover:shadow-lg hover:shadow-brand-500/25 transition-all duration-300">
+                <span class="relative px-4 sm:px-5 py-2.5 transition-all ease-in duration-75 rounded-[10px] bg-slate-900 text-white group-hover:bg-opacity-0 group-hover:text-slate-950 flex items-center gap-2 text-xs sm:text-sm">
                     <i class="fa-solid fa-plus-circle"></i>
                     <span>Publica tu Bici</span>
                 </span>
@@ -59,23 +64,23 @@
     </header>
 
     <!-- Hero & Impact Header -->
-    <section class="relative overflow-hidden pt-12 pb-16 bg-gradient-to-b from-slate-900 via-slate-800/50 to-slate-900">
+    <section class="relative overflow-hidden pt-10 pb-14 bg-gradient-to-b from-slate-900 via-slate-800/50 to-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-12">
+            <div class="text-center max-w-3xl mx-auto mb-10">
                 <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/20 mb-4">
                     <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
                     Santa Cruz de la Sierra - Movilidad Urbana
                 </span>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight mb-6">
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight mb-4">
                     Ahorra en transporte, rueda <span class="bg-gradient-to-r from-brand-400 to-emerald-300 bg-clip-text text-transparent">sin emisiones.</span>
                 </h1>
-                <p class="text-lg text-slate-300 leading-relaxed mb-8">
+                <p class="text-base sm:text-lg text-slate-300 leading-relaxed mb-6">
                     La alternativa inteligente ante el tráfico y el costo de gasolina. Alquila bicicletas directo de ciclistas y tiendas locales en SCZ.
                 </p>
             </div>
 
             <!-- Eco Impact Widget -->
-            <div id="impacto" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto p-6 bg-slate-800/80 backdrop-blur-xl border border-slate-700/60 rounded-3xl shadow-2xl">
+            <div id="impacto" class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto p-4 sm:p-6 bg-slate-800/80 backdrop-blur-xl border border-slate-700/60 rounded-3xl shadow-2xl">
                 <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-700/40">
                     <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl shrink-0">
                         <i class="fa-solid fa-gas-pump"></i>
@@ -110,8 +115,8 @@
     </section>
 
     <!-- Catalog Section -->
-    <main id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+    <main id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 w-full">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
             <div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Bicicletas Disponibles</h2>
                 <p class="text-slate-400 text-sm mt-1">Elige según tu ubicación preferida en la ciudad</p>
@@ -280,7 +285,7 @@
 
             lista.forEach(bici => {
                 const card = document.createElement('div');
-                card.className = "bg-slate-800/60 border border-slate-700/60 rounded-3xl overflow-hidden hover:border-brand-500/50 transition-all duration-300 shadow-lg flex flex-col justify-between";
+                card.className = "bg-slate-800/60 border border-slate-700/60 rounded-3xl overflow-hidden hover:border-brand-500/50 transition-all duration-300 hover:-translate-y-1 shadow-lg flex flex-col justify-between";
                 card.innerHTML = `
                     <div>
                         <div class="relative h-48 overflow-hidden bg-slate-900">
@@ -337,10 +342,4 @@
                     <div>
                         <h3 class="text-xl font-bold text-white">${bici.titulo}</h3>
                         <p class="text-xs text-brand-400 font-semibold"><i class="fa-solid fa-location-dot mr-1"></i>${bici.zona}</p>
-                    </div>
-                </div>
-
-                <div class="bg-slate-800/80 p-4 rounded-2xl mb-6 border border-slate-700/50">
-                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Días de Alquiler</label>
-                    <div class="flex items-center gap-3">
-      
+              
