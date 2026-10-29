@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiciShare SCZ - Movilidad Sostenible en Santa Cruz</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: '#0f172a',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-slate-900">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center shadow-lg shadow-brand-500/20 text-slate-950 font-bold text-2xl">
+                    <i class="fa-solid fa-bicycle"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-brand-400 bg-clip-text text-transparent">BiciShare <span class="text-brand-500">SCZ</span></span>
+                    <span class="block text-[10px] uppercase tracking-widest text-brand-400 font-semibold -mt-1">Eco Movilidad</span>
+                </div>
+            </div>
+
+            <button onclick="abrirModalPublicar()" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-xl group bg-gradient-to-br from-brand-500 to-emerald-600 group-hover:from-brand-500 group-hover:to-emerald-600 text-slate-950 font-bold hover:shadow-lg hover:shadow-brand-500/25 transition-all duration-300">
+                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 rounded-[10px] bg-slate-900 text-white group-hover:bg-opacity-0 group-hover:text-slate-950 flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span>Publica tu Bici</span>
+                </span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero & Impact Header -->
+    <section class="relative overflow-hidden pt-12 pb-16 bg-gradient-to-b from-slate-900 via-slate-800/50 to-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/20 mb-4">
+                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                    Santa Cruz de la Sierra - Movilidad Urbana
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight mb-6">
+                    Ahorra en transporte, rueda <span class="bg-gradient-to-r from-brand-400 to-emerald-300 bg-clip-text text-transparent">sin emisiones.</span>
+                </h1>
+                <p class="text-lg text-slate-300 leading-relaxed mb-8">
+                    La alternativa inteligente ante el tráfico y el costo de gasolina. Alquila bicicletas directo de ciclistas y tiendas locales en SCZ.
+                </p>
+            </div>
+
+            <!-- Eco Impact Widget -->
+            <div id="impacto" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto p-6 bg-slate-800/80 backdrop-blur-xl border border-slate-700/60 rounded-3xl shadow-2xl">
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-700/40">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-gas-pump"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black text-white" id="stat-gasolina">142 L</div>
+                        <div class="text-xs text-slate-400 font-medium">Gasolina Ahorrada</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-700/40">
+                    <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black text-white" id="stat-co2">330 kg</div>
+                        <div class="text-xs text-slate-400 font-medium">CO₂ Evitado en SCZ</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-700/40">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-route"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black text-white" id="stat-viajes">89</div>
+                        <div class="text-xs text-slate-400 font-medium">Viajes Realizados</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <main id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Bicicletas Disponibles</h2>
+                <p class="text-slate-400 text-sm mt-1">Elige según tu ubicación preferida en la ciudad</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="filtros-zona">
+                <button onclick="filtrarZona('todas')" class="btn-filtro active bg-brand-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-sm whitespace-nowrap transition-all shadow-md">
+                    Todas las Zonas
+                </button>
+                <button onclick="filtrarZona('Equipetrol')" class="btn-filtro bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-xl text-sm whitespace-nowrap transition-all border border-slate-700">
+                    Equipetrol
+                </button>
+                <button onclick="filtrarZona('Campus UAGRM')" class="btn-filtro bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-xl text-sm whitespace-nowrap transition-all border border-slate-700">
+                    Campus UAGRM
+                </button>
+                <button onclick="filtrarZona('El Urubó')" class="btn-filtro bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-xl text-sm whitespace-nowrap transition-all border border-slate-700">
+                    El Urubó
+                </button>
+                <button onclick="filtrarZona('Centro / 1er Anillo')" class="btn-filtro bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-xl text-sm whitespace-nowrap transition-all border border-slate-700">
+                    Centro / 1er Anillo
+                </button>
+            </div>
+        </div>
+
+        <!-- Bike Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="grid-bicis">
+            <!-- Rendered by JS -->
+        </div>
+    </main>
+
+    <!-- Modal Reservar -->
+    <div id="modal-reserva" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full relative shadow-2xl">
+            <button onclick="cerrarModalReserva()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-reserva-content">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Publicar Bici -->
+    <div id="modal-publicar" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-xl w-full relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="cerrarModalPublicar()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <h3 class="text-2xl font-bold text-white mb-2">Publica tu Bicicleta</h3>
+            <p class="text-sm text-slate-400 mb-6">Genera ingresos extra alquilando tu bici cuando no la usas.</p>
+
+            <form id="form-publicar" onsubmit="guardarNuevaBici(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Nombre / Modelo</label>
+                    <input type="text" id="pub-titulo" required placeholder="Ej: Bicicleta Trek Marlin 5" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Zona en SCZ</label>
+                        <select id="pub-zona" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500">
+                            <option value="Equipetrol">Equipetrol</option>
+                            <option value="Campus UAGRM">Campus UAGRM</option>
+                            <option value="El Urubó">El Urubó</option>
+                            <option value="Centro / 1er Anillo">Centro / 1er Anillo</option>
+                            <option value="Zona Norte">Zona Norte</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Precio por Día (Bs)</label>
+                        <input type="number" id="pub-precio" required min="10" placeholder="Ej: 35" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Tipo de Bici</label>
+                        <select id="pub-tipo" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500">
+                            <option value="Urbana">Urbana</option>
+                            <option value="Montaña (MTB)">Montaña (MTB)</option>
+                            <option value="Ruta / Plegable">Ruta / Plegable</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Teléfono WhatsApp</label>
+                        <input type="text" id="pub-telefono" required placeholder="Ej: 59178000000" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">URL Imagen (Opcional)</label>
+                    <input type="url" id="pub-foto" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold py-3.5 rounded-xl transition-colors mt-4">
+                    Publicar Bicicleta
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>BiciShare SCZ © 2026 - Proyecto de Fundamentos de Programación</p>
+            <p class="mt-1">Promoviendo la movilidad sostenible en Santa Cruz de la Sierra 🚲🌿</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript App -->
+    <script>
+        const bicisIniciales = [
+            {
+                id: 1,
+                titulo: "Scott Aspect 950 - MTB",
+                zona: "Equipetrol",
+                precio: 35,
+                tipo: "Montaña (MTB)",
+                propietario: "Taller Ciclismo Urbano",
+                telefono: "59170012345",
+                foto: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80",
+                pro: true
+            },
+            {
+                id: 2,
+                titulo: "Caloi Urbana Vintage",
+                zona: "Campus UAGRM",
+                precio: 25,
+                tipo: "Urbana",
+                propietario: "Carlos M. (Estudiante)",
+                telefono: "59178098765",
+                foto: "https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?auto=format&fit=crop&w=800&q=80",
+                pro: false
+            },
+            {
+                id: 3,
+                titulo: "Giant Talon 29er",
+                zona: "El Urubó",
+                precio: 45,
+                tipo: "Montaña (MTB)",
+                propietario: "Urubó Bike Shop",
+                telefono: "59171055443",
+                foto: "https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?auto=format&fit=crop&w=800&q=80",
+                pro: true
+            },
+            {
+                id: 4,
+                titulo: "Plegable DAHON Eco",
+                zona: "Centro / 1er Anillo",
+                precio: 30,
+                tipo: "Ruta / Plegable",
+                propietario: "Lucía R.",
+                telefono: "59176011223",
+                foto: "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?auto=format&fit=crop&w=800&q=80",
+                pro: false
+            }
+        ];
+
+        let bicis = JSON.parse(localStorage.getItem('bicis_scz')) || bicisIniciales;
+
+        function renderizarCatalogo(lista = bicis) {
+            const grid = document.getElementById('grid-bicis');
+            grid.innerHTML = '';
+
+            lista.forEach(bici => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-800/60 border border-slate-700/60 rounded-3xl overflow-hidden hover:border-brand-500/50 transition-all duration-300 shadow-lg flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-slate-900">
+                            <img src="${bici.foto}" alt="${bici.titulo}" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-xs font-semibold px-3 py-1 rounded-full text-brand-400 border border-slate-700">
+                                <i class="fa-solid fa-location-dot mr-1"></i>${bici.zona}
+                            </span>
+                            ${bici.pro ? '<span class="absolute top-3 right-3 bg-brand-500 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase">Tienda Aliada</span>' : ''}
+                        </div>
+                        <div class="p-5">
+                            <div class="text-xs text-slate-400 mb-1">${bici.tipo} • Propietario: <span class="text-slate-300">${bici.propietario}</span></div>
+                            <h3 class="text-lg font-bold text-white mb-3">${bici.titulo}</h3>
+                            <div class="flex items-baseline gap-1 mb-4">
+                                <span class="text-2xl font-black text-brand-400">${bici.precio} Bs</span>
+                                <span class="text-xs text-slate-400">/ día</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-0">
+                        <button onclick="abrirModalReserva(${bici.id})" class="w-full bg-slate-700 hover:bg-brand-500 hover:text-slate-950 text-white font-semibold py-2.5 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>Reservar por WhatsApp</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filtrarZona(zona) {
+            document.querySelectorAll('.btn-filtro').forEach(btn => {
+                btn.classList.remove('bg-brand-500', 'text-slate-950', 'font-bold');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            event.target.classList.remove('bg-slate-800', 'text-slate-300');
+            event.target.classList.add('bg-brand-500', 'text-slate-950', 'font-bold');
+
+            if (zona === 'todas') {
+                renderizarCatalogo(bicis);
+            } else {
+                const filtradas = bicis.filter(b => b.zona === zona);
+                renderizarCatalogo(filtradas);
+            }
+        }
+
+        function abrirModalReserva(id) {
+            const bici = bicis.find(b => b.id === id);
+            if (!bici) return;
+
+            const modalContent = document.getElementById('modal-reserva-content');
+            modalContent.innerHTML = `
+                <div class="flex items-center gap-4 mb-4">
+                    <img src="${bici.foto}" class="w-16 h-16 rounded-2xl object-cover border border-slate-700">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">${bici.titulo}</h3>
+                        <p class="text-xs text-brand-400 font-semibold"><i class="fa-solid fa-location-dot mr-1"></i>${bici.zona}</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/80 p-4 rounded-2xl mb-6 border border-slate-700/50">
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Días de Alquiler</label>
+                    <div class="flex items-center gap-3">
+      
